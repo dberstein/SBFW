@@ -1,0 +1,39 @@
+<VirtualHost *:80>
+    ServerName sfw.local
+    ServerAlias *.sfw.local
+
+    php_value   mbstring.internal_encoding      "UTF-8"
+    php_value   mbstring.http_input             "UTF-8"
+    php_value   mbstring.encoding_translation   "On"
+    php_value   short_open_tag                  "Off"
+    php_value   date.timezone                   "UTC"
+
+    DocumentRoot /Users/daniel/Projects/sfw/public
+    <Directory /Users/daniel/Projects/sfw/public>
+        DirectoryIndex index.php index.html index.htm
+        Allow from all
+    </Directory>
+
+    # Forbid media "stealers" by allowing requests of media files only
+    # if referer matches request's 'Host' header
+    RewriteEngine   On
+    RewriteCond %{REQUEST_URI}                    \.(png|gif|png|css|js|ico)$                       [NC]
+    RewriteCond %{HTTP_REFERER}                   ^.+$
+    RewriteCond %{HTTP_HOST}/%{HTTP_REFERER}}     !^(www\.)?([^/]+)/\s*[^:]+://(www\.)?\2(/|\:).*$  [NC]
+    RewriteRule ^.*$                              -                                                 [F,L]
+
+    # Rewrite requests for unexistant paths to index.php
+    RewriteCond %{DOCUMENT_ROOT}%{REQUEST_URI} -f [OR]
+    RewriteCond %{DOCUMENT_ROOT}%{REQUEST_URI} -s [OR]
+    RewriteCond %{DOCUMENT_ROOT}%{REQUEST_URI} -l [OR]
+    RewriteCond %{DOCUMENT_ROOT}%{REQUEST_URI} -d
+    RewriteRule ^.*$ - [NC,L]
+    RewriteRule ^.*$ /index.php [NC,L]
+
+    <IfModule mod_expires.c>
+        ExpiresDefault "access plus 1 weeks"
+        ExpiresActive On
+    </IfModule>
+    FileETag None
+</VirtualHost>
+

@@ -1,0 +1,4 @@
+<xml>
+    <alias uri="/" node="index" action="index1" />
+    <alias uri="/abc" node="index" action="index3" />
+</xml>
