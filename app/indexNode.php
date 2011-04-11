@@ -9,6 +9,6 @@ class indexNode extends Sfw_Node
 
     public function index2()
     {
-        $this->_add('yy2');
+        $this->_add($this->_request->getMethod() .'  yy2');
     }
 }

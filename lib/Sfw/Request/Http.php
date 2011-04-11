@@ -8,9 +8,11 @@ class Sfw_Request_Http implements Sfw_Request_Interface
     protected $_uri;
     protected $_parts = array();
     protected $_params = array();
+    protected $_method;
 
     public function __construct($uri = null)
     {
+        $this->setMethod($_SERVER['REQUEST_METHOD']);
         $this->setUri($uri);
     }
 
@@ -42,6 +44,18 @@ class Sfw_Request_Http implements Sfw_Request_Interface
     public function getUri()
     {
         return $this->_uri;
+    }
+
+    public function setMethod($method)
+    {
+        $this->_method = $method;
+
+        return $this;
+    }
+
+    public function getMethod()
+    {
+        return $this->_method;
     }
 
     public function getParam($type, $name, $default = null)
