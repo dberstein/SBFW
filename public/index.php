@@ -11,7 +11,9 @@ $root = realpath(
 set_include_path(
     $root . DIRECTORY_SEPARATOR . 'lib' .
     PATH_SEPARATOR .
-    $root . DIRECTORY_SEPARATOR . 'app' .
+    $root . DIRECTORY_SEPARATOR . 'app' . DIRECTORY_SEPARATOR . 'nodes' .
+    PATH_SEPARATOR .
+    $root . DIRECTORY_SEPARATOR . 'app' . DIRECTORY_SEPARATOR . 'views' .
     PATH_SEPARATOR .
     get_include_path()
 );
@@ -21,8 +23,6 @@ Sfw_Controller::init();
 
 // Setup aliases
 Sfw_Controller::addAlias($root . DIRECTORY_SEPARATOR . 'conf');
-// '/abcd', 'index', 'index1');
-// Sfw_Controller::addAlias('/', 'index', 'index2');
 
 // Route, dispatch and output generated HTML
 echo Sfw_Controller::route();

@@ -49,8 +49,10 @@ class Sfw_Controller
             break;
         }
 
-        header('HTTP/' . $_SERVER['SERVER_PROTOCOL'] . ' 404');
-        echo 'Not found';
+        $node = new Sfw_Node_NotFound($request, $instance);
+        $node->notFound();
+
+        return (string) $node;
     }
 
     static public function addAlias($path)
