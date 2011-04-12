@@ -2,17 +2,52 @@
 
 class Sfw_Controller
 {
+    static protected $_root;
     static protected $_alias = array();
 
-    static public function init()
+    /**
+     * Initializes controller instance. Thing done:
+     * - Sets applicaton's root directory to $root
+     * - Sets {@see Sfw_Controller::autoload} as autoloder
+     *
+     * @param string $root
+     */
+    static public function init($root = null)
     {
+        self::setRoot($root);
         $autoloader = 'Sfw_Controller::autoload';
         spl_autoload_register($autoloader);
     }
 
+    /**
+     * Sets $root as application's root
+     *
+     * @param string $root
+     */
+    static public function setRoot($root)
+    {
+        self::$_root = $root;
+    }
+
+    /**
+     * Returns application's root directory
+     *
+     * @return string
+     */
+    static public function getRoot()
+    {
+        return self::$_root;
+    }
+
+    /**
+     * Routes incoming request and returns result as string.
+     *
+     * @return string
+     */
     static public function route()
     {
         $request = new Sfw_Request_Http($_SERVER['REQUEST_URI']);
+        $value = array();
         foreach (array('_POST', '_GET', '_COOKIE', '_FILES') as $type) {
             eval("\$value = \$$type;");
             foreach ($value as $k => $v) {
@@ -55,9 +90,20 @@ class Sfw_Controller
         return (string) $node;
     }
 
-    static public function addAlias($path)
+    /**
+     * Setups aliases from XML document at file $filename. If parameter $relative
+     * is true, the path is treated as relative to application's root directory.
+     *
+     * @param string $filename
+     * @param bool   $relative
+     */
+    static public function addAlias($filename, $relative = true)
     {
-        $filename = DIRECTORY_SEPARATOR . ltrim($path, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR . 'alias.xml';
+        if ($relative) {
+            $filename = rtrim(self::getRoot(), DIRECTORY_SEPARATOR)
+                      . DIRECTORY_SEPARATOR
+                      . $filename;
+        }
 
         if (is_readable($filename)) {
             $xml = new SimpleXMLElement(
@@ -75,17 +121,28 @@ class Sfw_Controller
         }
     }
 
+    /**
+     * Autoloader
+     *
+     * @param string $classname
+     */
+    static public function autoload($classname)
+    {
+        $filename = str_replace('_', DIRECTORY_SEPARATOR, $classname) . '.php';
+        require_once $filename;
+    }
+
+    /**
+     * Compares two routes and return integer value of which is longer.
+     *
+     * @param array $a
+     * @param array $b
+     */
     static protected function _cmpLength($a, $b)
     {
         $a = strlen($a['uri']);
         $b = strlen($b['uri']);
 
         return ($a < $b) ? -1 : 1;
-    }
-
-    static public function autoload($classname)
-    {
-        $filename = str_replace('_', DIRECTORY_SEPARATOR, $classname) . '.php';
-        require_once $filename;
     }
 }
