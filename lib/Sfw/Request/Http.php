@@ -5,6 +5,11 @@ class Sfw_Request_Http implements Sfw_Request_Interface
     const NOT_FOUND_NODE = 'NotFound';
     const NO_ACTION = 'NoAction';
 
+    const TYPE_GET = 'GET';
+    const TYPE_POST = 'POST';
+    const TYPE_FILES = 'FILES';
+    const TYPE_COOKIE = 'COOKIE';
+
     protected $_uri;
     protected $_parts = array();
     protected $_params = array();

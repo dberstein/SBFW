@@ -46,10 +46,20 @@ class Sfw_Controller
      */
     static public function route()
     {
-        $request = new Sfw_Request_Http($_SERVER['REQUEST_URI']);
+        if (array_key_exists('SCRIPT_NAME', $_SERVER)) {
+            $uri = $_SERVER['SCRIPT_NAME'];
+        } else {
+            $uri = preg_replace(
+                '/\?.*/',
+                '',
+                $_SERVER['REQUET_URI']
+            );
+        }
+
+        $request = new Sfw_Request_Http($uri);
         $value = array();
-        foreach (array('_POST', '_GET', '_COOKIE', '_FILES') as $type) {
-            eval("\$value = \$$type;");
+        foreach (array('POST', 'GET', 'COOKIE', 'FILES') as $type) {
+            eval("\$value = \$_$type;");
             foreach ($value as $k => $v) {
                 $request->setParam($type, $k, $v);
             }
