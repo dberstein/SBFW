@@ -1,6 +1,6 @@
 <?php
 
-class indexNode extends Sfw_Node
+class IndexNode extends Sfw_Node
 {
     public function index1()
     {

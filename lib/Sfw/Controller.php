@@ -73,7 +73,7 @@ class Sfw_Controller
                 continue;
             }
 
-            $nodeClass = $alias['node'];
+            $nodeClass = self::_normalizeClass($alias['node']);
             $node = new $nodeClass($request, $instance);
             $callback = array($node, $alias['action']);
             if (is_callable($callback)) {
@@ -130,6 +130,17 @@ class Sfw_Controller
     {
         $filename = str_replace('_', DIRECTORY_SEPARATOR, $classname) . '.php';
         require_once $filename;
+    }
+
+    /**
+     * Returns normalized class name $class
+     *
+     * @param string $class
+     * @return string
+     */
+    static protected function _normalizeClass($class)
+    {
+        return ucfirst($class);
     }
 
     /**
