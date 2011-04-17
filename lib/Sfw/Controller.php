@@ -46,13 +46,13 @@ class Sfw_Controller
      */
     static public function route()
     {
-        if (array_key_exists('SCRIPT_NAME', $_SERVER)) {
-            $uri = $_SERVER['SCRIPT_NAME'];
+        if (array_key_exists('SCRIPT_URL', $_SERVER)) {
+            $uri = $_SERVER['SCRIPT_URL'];
         } else {
             $uri = preg_replace(
                 '/\?.*/',
                 '',
-                $_SERVER['REQUET_URI']
+                $_SERVER['REQUEST_URI']
             );
         }
 
