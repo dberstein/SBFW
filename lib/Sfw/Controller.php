@@ -44,7 +44,7 @@ class Sfw_Controller
      *
      * @return string
      */
-    static public function route()
+    static public function route($emitHeaders = true)
     {
         if (array_key_exists('SCRIPT_URL', $_SERVER)) {
             $uri = $_SERVER['SCRIPT_URL'];
@@ -74,6 +74,11 @@ class Sfw_Controller
         $callback = array($node, $action);
         if (in_array($action, get_class_methods($node)) && is_callable($callback)) {
             call_user_func($callback);
+
+            if ($emitHeaders) {
+                $node->emitHeaders();
+            }
+
             return (string) $node;
         }
 
@@ -88,6 +93,11 @@ class Sfw_Controller
             $callback = array($node, $alias['action']);
             if (is_callable($callback)) {
                 call_user_func($callback);
+
+                if ($emitHeaders) {
+                    $node->emitHeaders();
+                }
+
                 return (string) $node;
             }
 
@@ -96,6 +106,10 @@ class Sfw_Controller
 
         $node = new Sfw_Node_NotFound($request, $instance);
         $node->notFound();
+
+        if ($emitHeaders) {
+            $node->emitHeaders();
+        }
 
         return (string) $node;
     }

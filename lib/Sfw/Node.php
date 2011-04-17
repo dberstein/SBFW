@@ -6,6 +6,7 @@ class Sfw_Node
     protected $_controller;
     protected $_content;
     protected $_status = 200;
+    protected $_headers = array();
 
     public function __construct(Sfw_Request_Interface $request, Sfw_Controller $controller)
     {
@@ -29,6 +30,17 @@ class Sfw_Node
         return $this;
     }
 
+    public function _addHeader($name, $value = null)
+    {
+        if (empty($value)) {
+            $this->_headers[] = $name;
+        } else {
+            $this->_headers[$name] = $value;
+        }
+
+        return $this;
+    }
+
     protected function _status()
     {
         $proto = '1.0';
@@ -36,7 +48,8 @@ class Sfw_Node
             $proto = $_SERVER['SERVER_PROTOCOL'];
         }
 
-        header("HTTP/{$proto} {$this->_status}");
+        $header = "HTTP/{$proto} {$this->_status}";
+        $this->_addHeader($header);
 
         return $this;
     }
@@ -47,6 +60,32 @@ class Sfw_Node
             'Unknown action [' . get_class($this) . '->' . $name . '()]',
             403
         );
+    }
+
+    public function emitHeaders($withStatus = true)
+    {
+        if ($withStatus) {
+            $this->_status();
+        }
+
+        // Cache control headers
+        $this->_addHeader('Cache-Control', 'none');
+        $this->_addHeader('Expires', date('r', time() - (3600 * 24)));
+
+        // Informational headers
+        $this->_addHeader('X-Framework', 'Sfw-' . Sfw_Version::getVersion());
+
+        foreach ($this->_headers as $name => $value) {
+            if (empty($name) || ctype_digit($name)) {
+                header($value);
+            } else if (empty($value)) {
+                header($name);
+            } else {
+                header($name . ': ' . $value, true);
+            }
+        }
+
+        return $this;
     }
 
     public function __toString()
