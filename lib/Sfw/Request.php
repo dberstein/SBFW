@@ -28,7 +28,9 @@ class Sfw_Request
     public function matches($regex)
     {
         if (preg_match($regex, self::$_requestUri, $matches)) {
-            $this->_params = $matches;
+            foreach ($matches as $name => $value) {
+                $this->_params[$name] = urldecode($value);
+            }
 
             return true;
         }
