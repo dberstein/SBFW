@@ -78,7 +78,11 @@ class Sfw_Router
         }
 
         $controller->setRequest($request);
-
+        $controller->getPage()->setHeader(
+            'x sfw route',
+            $controller->getName()
+        );
+        
         return $controller;
     }
 }

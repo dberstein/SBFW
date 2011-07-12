@@ -43,7 +43,7 @@ $table = new Sfw_Controller_Table;
  */
 require_once 'Sfw/Route.php';
 $r1 = new Sfw_Route($home, '#^/$#', 'home');
-$r2 = new Sfw_Route($table, '#/t/(?P<table>[^/\?]*)#', 'table');
+$r2 = new Sfw_Route($table, '#/table/(?P<table>[^/\?]*)#', 'table');
 
 /**
  * @see Sfw_Router
@@ -55,4 +55,5 @@ $router->add($r1);
 $router->add($r2);
 
 $controller = $router->route();
-echo $controller->render();
+$page = $controller->render();
+$page->emit();
