@@ -1,171 +1,46 @@
 <?php
 
-class Sfw_Controller
+namespace Sfw;
+
+class Controller
 {
-    static protected $_root;
-    static protected $_alias = array();
+    protected $_page;
+    protected $_request;
 
-    /**
-     * Sets $root as application's root
-     *
-     * @param string $root
-     */
-    static public function setRoot($root)
+    public function render()
     {
-        self::$_root = $root;
+        //
     }
 
-    /**
-     * Returns application's root directory
-     *
-     * @return string
-     */
-    static public function getRoot()
+    public function setRequest(\Sfw\Request $request)
     {
-        return self::$_root;
+        $this->_request = $request;
+
+        return $this;
     }
 
-    /**
-     * Routes incoming request and returns result as string.
-     *
-     * @return string
-     */
-    static public function route($emitHeaders = true)
+    public function getRequest()
     {
-        if (array_key_exists('SCRIPT_URL', $_SERVER)) {
-            $uri = $_SERVER['SCRIPT_URL'];
-        } else {
-            $uri = preg_replace(
-                '/\?.*/',
-                '',
-                $_SERVER['REQUEST_URI']
-            );
-        }
-
-        $request = new Sfw_Request_Http($uri);
-        $value = array();
-        foreach (array('POST', 'GET', 'COOKIE', 'FILES') as $type) {
-            eval("\$value = \$_$type;");
-            foreach ($value as $k => $v) {
-                $request->setParam($type, $k, $v);
-            }
-        }
-
-        $route = $request->getRoute();
-        $instance = new self;
-        $nodeClass = $route['class'];
-        $node = new $nodeClass($request, $instance);
-        $action = $route['action'];
-
-        $callback = array($node, $action);
-        if (in_array($action, get_class_methods($node)) && is_callable($callback)) {
-            call_user_func($callback);
-
-            if ($emitHeaders) {
-                $node->emitHeaders();
-            }
-
-            return (string) $node;
-        }
-
-        usort(self::$_alias, 'Sfw_Controller::_cmpLength');
-        foreach (self::$_alias as $alias) {
-            if (!$request->matches($alias['uri'])) {
-                continue;
-            }
-
-            $nodeClass = self::_normalizeClass($alias['node']);
-            $node = new $nodeClass($request, $instance);
-            $callback = array($node, $alias['action']);
-            if (is_callable($callback)) {
-                call_user_func($callback);
-
-                if ($emitHeaders) {
-                    $node->emitHeaders();
-                }
-
-                return (string) $node;
-            }
-
-            break;
-        }
-
-        $node = new Sfw_Node_NotFound($request, $instance);
-        $node->notFound();
-
-        if ($emitHeaders) {
-            $node->emitHeaders();
-        }
-
-        return (string) $node;
+        return $this->_request;
     }
 
-    /**
-     * Setups aliases from XML document at file $filename. If parameter $relative
-     * is true, the path is treated as relative to application's root directory.
-     *
-     * @param string $filename
-     * @param bool   $relative
-     */
-    static public function addAlias($filename, $relative = true)
+    public function getName()
     {
-        if ($relative) {
-            $filename = rtrim(self::getRoot(), DIRECTORY_SEPARATOR)
-                      . DIRECTORY_SEPARATOR
-                      . $filename;
+        $class = get_class($this);
+        $name = $class;
+        if (preg_match('/^Sfw[^\w]Controller[^\w](.+)$/', $class, $matches)) {
+            $name = $matches[1];
         }
 
-        if (is_readable($filename)) {
-            $xml = new SimpleXMLElement(
-                file_get_contents($filename)
-            );
+        return $name;
+    }
 
-            foreach ($xml->alias as $alias) {
-                $attr = $alias->attributes();
-                self::$_alias[] = array(
-                    'uri' => (string) $attr['uri'],
-                    'node' => (string) $attr['node'] . 'Node',
-                    'action' => (string) $attr['action'],
-                );
-            }
+    public function getPage()
+    {
+        if (!($this->_page instanceof \Sfw\Page)) {
+            $this->_page = new \Sfw\Page;
         }
-    }
 
-    /**
-     * Autoloader
-     *
-     * @param string $classname
-     */
-    static public function autoload($classname)
-    {
-        $filename = str_replace('_', DIRECTORY_SEPARATOR, $classname) . '.php';
-        $filename = str_replace('\\', DIRECTORY_SEPARATOR, $classname) . '.php';
-
-        require_once $filename;
-    }
-
-    /**
-     * Returns normalized class name $class
-     *
-     * @param string $class
-     * @return string
-     */
-    static protected function _normalizeClass($class)
-    {
-        return ucfirst($class);
-    }
-
-    /**
-     * Compares two routes and return integer value of which is longer.
-     *
-     * @param array $a
-     * @param array $b
-     */
-    static protected function _cmpLength($a, $b)
-    {
-        $a = strlen($a['uri']);
-        $b = strlen($b['uri']);
-
-        return ($a < $b) ? -1 : 1;
+        return $this->_page;
     }
 }

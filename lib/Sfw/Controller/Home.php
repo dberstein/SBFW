@@ -2,7 +2,7 @@
 
 namespace Sfw\Controller;
 
-class Home extends ControllerAbstract
+class Home extends \Sfw\Controller
 {
     public function render()
     {

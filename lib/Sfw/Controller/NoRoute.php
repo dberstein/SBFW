@@ -2,7 +2,7 @@
 
 namespace Sfw\Controller;
 
-class NoRoute extends ControllerAbstract
+class NoRoute extends \Sfw\Controller
 {
     public function render()
     {

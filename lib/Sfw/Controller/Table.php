@@ -2,7 +2,7 @@
 
 namespace Sfw\Controller;
 
-class Table extends ControllerAbstract
+class Table extends \Sfw\Controller
 {
     public function render()
     {

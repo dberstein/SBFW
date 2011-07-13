@@ -1,6 +1,8 @@
 <?php
 
-class Sfw_Version
+namespace Sfw;
+
+class Version
 {
     const VERSION = '0.1';
 

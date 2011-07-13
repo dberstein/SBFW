@@ -9,7 +9,7 @@ class Route
     protected $_controller;
 
     public function __construct(
-        Controller\ControllerAbstract $controller,
+        Controller $controller,
         $regex,
         $name = null
     )

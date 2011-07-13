@@ -9,7 +9,13 @@ class Page
 
     public function __construct($payload = null, array $headers = array())
     {
+        $this->setHeader(
+            'x sfw version',
+            Version::getVersion()
+        );
+
         $this->setPayload($payload);
+
         foreach ($headers as $name => $value) {
             $this->setHeader($name, $value);
         }

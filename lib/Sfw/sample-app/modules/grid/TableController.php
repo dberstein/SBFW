@@ -1,6 +1,8 @@
 <?php
 
-class App_Grid_TableController extends Sfw_Module_Controller
+namespace App\Controller;
+
+class Grid extends Sfw\Module\Controller
 {
     //
 }
