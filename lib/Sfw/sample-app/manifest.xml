@@ -1,0 +1,8 @@
+<manifest>
+    <module name="default">
+        <route controller="HomeController" />
+    </module>
+    <module name="grid">
+        <route method="*" match="#/table/(?P<table>[^/\?]*)#" controller="TableController" layout="default" />
+    </module>
+</manifest>
