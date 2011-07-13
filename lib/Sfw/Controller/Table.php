@@ -4,7 +4,11 @@ class Sfw_Controller_Table extends Sfw_Controller_Abstract
 {
     public function render()
     {
-        $table = trim($this->getRequest()->getParam('table'));
+        $table = trim(
+            $this->getRequest()
+                 ->getParam('table')
+        );
+
         $page = $this->getPage();
         if (empty($table)) {
             $page->setRawHeader(
@@ -18,7 +22,7 @@ class Sfw_Controller_Table extends Sfw_Controller_Abstract
             $page->setPayload(
                 sprintf(
                     'table [%s]',
-                    $table
+                    htmlentities($table)
                 )
             );
         }
