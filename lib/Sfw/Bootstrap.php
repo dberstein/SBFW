@@ -24,15 +24,10 @@ class Bootstrap
         $autoloader = 'Sfw\Bootstrap::autoload';
         spl_autoload_register($autoloader);
 
-//        $params = array(
-//            'dbname' => 'templatenew',
-//            'user' => 'root',
-//            'password' => 'kimas',
-//            'host' => '127.0.0.1',
-//            'driver' => 'pdo_mysql',
-//        );
-//        $config = new \Doctrine\DBAL\Configuration;
-//        $conn = DriverManager::getConnection($params, $config);
+        // Doctrine ClassLoader
+        require_once 'Doctrine/Common/ClassLoader.php';
+        $classLoader = new \Doctrine\Common\ClassLoader('Doctrine');
+        $classLoader->register();
     }
 
     /**
