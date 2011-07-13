@@ -1,6 +1,8 @@
 <?php
 
-class Sfw_Request
+namespace Sfw;
+
+class Request
 {
     static protected $_instance;
     static protected $_requestUri;

@@ -1,6 +1,8 @@
 <?php
 
-class Sfw_Controller_Table extends Sfw_Controller_Abstract
+namespace Sfw\Controller;
+
+class Table extends ControllerAbstract
 {
     public function render()
     {

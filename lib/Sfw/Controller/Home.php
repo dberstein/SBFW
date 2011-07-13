@@ -1,6 +1,8 @@
 <?php
 
-class Sfw_Controller_Home extends Sfw_Controller_Abstract
+namespace Sfw\Controller;
+
+class Home extends ControllerAbstract
 {
     public function render()
     {

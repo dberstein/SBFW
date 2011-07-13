@@ -1,6 +1,8 @@
 <?php
 
-class Sfw_Controller_Abstract implements Sfw_Controller_Interface
+namespace Sfw\Controller;
+
+class ControllerAbstract// implements Controller\ControllerInterface
 {
     protected $_page;
     protected $_request;
@@ -10,7 +12,7 @@ class Sfw_Controller_Abstract implements Sfw_Controller_Interface
         //
     }
 
-    public function setRequest(Sfw_Request $request)
+    public function setRequest(\Sfw\Request $request)
     {
         $this->_request = $request;
 
@@ -26,7 +28,7 @@ class Sfw_Controller_Abstract implements Sfw_Controller_Interface
     {
         $class = get_class($this);
         $name = $class;
-        if (preg_match('/^Sfw_Controller_(.+)$/', $class, $matches)) {
+        if (preg_match('/^Sfw[^\w]Controller[^\w](.+)$/', $class, $matches)) {
             $name = $matches[1];
         }
 
@@ -35,13 +37,8 @@ class Sfw_Controller_Abstract implements Sfw_Controller_Interface
 
     public function getPage()
     {
-        if (!($this->_page instanceof Sfw_Page)) {
-            /**
-             * @see Sfw_Page
-             */
-            require_once 'Sfw/Page.php';
-
-            $this->_page = new Sfw_Page;
+        if (!($this->_page instanceof \Sfw\Page)) {
+            $this->_page = new \Sfw\Page;
         }
 
         return $this->_page;

@@ -1,6 +1,8 @@
 <?php
 
-class Sfw_Router
+namespace Sfw;
+
+class Router
 {
     /**
      * Singleton instance
@@ -45,7 +47,7 @@ class Sfw_Router
      *
      * @param Sfw_Route $route
      */
-    public function add(Sfw_Route $route)
+    public function add(Route $route)
     {
         $name = $route->getName();
         if (is_null($name)) {
@@ -59,11 +61,7 @@ class Sfw_Router
 
     public function route()
     {
-        /**
-         * @see Sfw_Request
-         */
-        require_once 'Sfw/Request.php';
-        $request = Sfw_Request::getInstance();
+        $request = Request::getInstance();
         $uri = $request->getUri();
 
         foreach ($this->_routes as $route) {
@@ -74,7 +72,7 @@ class Sfw_Router
         }
 
         if (!isset($controller)) {
-            $controller = new Sfw_Controller_NoRoute;
+            $controller = new Controller\NoRoute;
         }
 
         $controller->setRequest($request);

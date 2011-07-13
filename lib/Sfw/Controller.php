@@ -6,20 +6,6 @@ class Sfw_Controller
     static protected $_alias = array();
 
     /**
-     * Initializes controller instance. Thing done:
-     * - Sets applicaton's root directory to $root
-     * - Sets {@see Sfw_Controller::autoload} as autoloder
-     *
-     * @param string $root
-     */
-    static public function init($root = null)
-    {
-        self::setRoot($root);
-        $autoloader = 'Sfw_Controller::autoload';
-        spl_autoload_register($autoloader);
-    }
-
-    /**
      * Sets $root as application's root
      *
      * @param string $root
@@ -153,6 +139,8 @@ class Sfw_Controller
     static public function autoload($classname)
     {
         $filename = str_replace('_', DIRECTORY_SEPARATOR, $classname) . '.php';
+        $filename = str_replace('\\', DIRECTORY_SEPARATOR, $classname) . '.php';
+
         require_once $filename;
     }
 

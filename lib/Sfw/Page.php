@@ -1,6 +1,8 @@
 <?php
 
-class Sfw_Page
+namespace Sfw;
+
+class Page
 {
     protected $_headers = array();
     protected $_payload;

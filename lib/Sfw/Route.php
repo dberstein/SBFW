@@ -1,13 +1,17 @@
 <?php
 
-class Sfw_Route
+namespace Sfw;
+
+class Route
 {
     protected $_regex;
     protected $_name;
     protected $_controller;
 
     public function __construct(
-        Sfw_Controller_Interface $controller, $regex, $name = null
+        Controller\ControllerAbstract $controller,
+        $regex,
+        $name = null
     )
     {
         $this->_controller = $controller;
@@ -27,11 +31,7 @@ class Sfw_Route
 
     public function matches($path)
     {
-        /**
-         * @see Sfw_Request
-         */
-        require_once 'Sfw/Request.php';
-        $request = Sfw_Request::getInstance();
+        $request = Request::getInstance();
 
         if ($request->matches($this->_regex)) {
             return $this->_controller;
