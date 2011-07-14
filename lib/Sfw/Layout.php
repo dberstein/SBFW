@@ -48,7 +48,7 @@ class Layout
         $payload = null;
         if (file_exists($layout)) {
             // Replace placeholders
-            $placeholders = $this->_getPlaceholders()
+            $placeholders = $this->_getPlaceholders();
             foreach ($placeholders as $name => $value) {
                 $payload = preg_replace('/{' . preg_quote($name, '/') . '}/', $value);
             }
