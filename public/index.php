@@ -1,1 +1,0 @@
-../lib/Sfw/index.php

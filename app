@@ -1,1 +1,1 @@
-lib/Sfw/sample-app/
+lib/Sfw/sample-app/app/

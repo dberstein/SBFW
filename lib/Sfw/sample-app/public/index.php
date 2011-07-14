@@ -5,7 +5,7 @@
  *
  * @see \Sfw\Bootstrap
  */
-require_once dirname(__FILE__) . '/Bootstrap.php';
+require_once dirname(__FILE__) . '/../../Bootstrap.php';
 Sfw\Bootstrap::setup();
 
 $home = new \Sfw\Controller\Home;
