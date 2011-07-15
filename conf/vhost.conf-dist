@@ -1,6 +1,6 @@
 <VirtualHost *:80>
-    ServerName sfw.local
-    ServerAlias *.sfw.local
+    ServerName sbfw.local
+    ServerAlias *.sbfw.local
 
     php_value   mbstring.internal_encoding      "UTF-8"
     php_value   mbstring.http_input             "UTF-8"
@@ -8,8 +8,8 @@
     php_value   short_open_tag                  "Off"
     php_value   date.timezone                   "UTC"
 
-    DocumentRoot /Users/daniel/Projects/sfw/public
-    <Directory /Users/daniel/Projects/sfw/public>
+    DocumentRoot /Users/daniel/Projects/SBFW/public
+    <Directory /Users/daniel/Projects/SBFW/public>
         DirectoryIndex index.php index.html index.htm
         Allow from all
     </Directory>
