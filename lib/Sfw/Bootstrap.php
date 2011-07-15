@@ -1,6 +1,6 @@
 <?php
 
-namespace Sfw;
+namespace SBFW;
 
 class Bootstrap
 {
@@ -21,7 +21,7 @@ class Bootstrap
         );
 
         // Initilize routines (autoloader, etc)
-        $autoloader = 'Sfw\Bootstrap::autoload';
+        $autoloader = 'SBFW\Bootstrap::autoload';
         spl_autoload_register($autoloader);
 
         // Doctrine ClassLoader

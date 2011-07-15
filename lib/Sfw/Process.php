@@ -1,8 +1,8 @@
 <?php
 
-namespace Sfw;
+namespace SBFW;
 
-use Sfw\Process\Pipes;
+use SBFW\Process\Pipes;
 
 class Process
 {
@@ -22,9 +22,9 @@ class Process
 
         // Clear pipes
         $this->_pipes = array(
-            \Sfw\Process\Pipes::STDIN => null,
-            \Sfw\Process\Pipes::STDOUT => null,
-            \Sfw\Process\Pipes::STDERR => null,
+            \SBFW\Process\Pipes::STDIN => null,
+            \SBFW\Process\Pipes::STDOUT => null,
+            \SBFW\Process\Pipes::STDERR => null,
         );
 
         return $this;

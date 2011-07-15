@@ -1,8 +1,8 @@
 <?php
 
-namespace Sfw\Controller;
+namespace SBFW\Controller;
 
-class Home extends \Sfw\Controller
+class Home extends \SBFW\Controller
 {
     public function render()
     {

@@ -1,8 +1,8 @@
 <?php
 
-namespace Sfw\Response;
+namespace SBFW\Response;
 
-class Http extends \Sfw\Response
+class Http extends \SBFW\Response
 {
     protected $_status;
     protected $_headers;

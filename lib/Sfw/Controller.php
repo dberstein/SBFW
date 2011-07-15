@@ -1,6 +1,6 @@
 <?php
 
-namespace Sfw;
+namespace SBFW;
 
 class Controller
 {
@@ -12,7 +12,7 @@ class Controller
         //
     }
 
-    public function setRequest(\Sfw\Request $request)
+    public function setRequest(\SBFW\Request $request)
     {
         $this->_request = $request;
 
@@ -28,7 +28,7 @@ class Controller
     {
         $class = get_class($this);
         $name = $class;
-        if (preg_match('/^Sfw[^\w]Controller[^\w](.+)$/', $class, $matches)) {
+        if (preg_match('/^SBFW[^\w]Controller[^\w](.+)$/', $class, $matches)) {
             $name = $matches[1];
         }
 
@@ -37,8 +37,8 @@ class Controller
 
     public function getPage()
     {
-        if (!($this->_page instanceof \Sfw\Page)) {
-            $this->_page = new \Sfw\Page;
+        if (!($this->_page instanceof \SBFW\Page)) {
+            $this->_page = new \SBFW\Page;
         }
 
         return $this->_page;

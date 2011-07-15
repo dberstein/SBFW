@@ -1,6 +1,6 @@
 <?php
 
-namespace Sfw;
+namespace SBFW;
 
 class Page
 {

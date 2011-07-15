@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-class Grid extends Sfw\Module\Controller
+class Grid extends SBFW\Module\Controller
 {
     //
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace Sfw\Process;
+namespace SBFW\Process;
 
 class Result
 {

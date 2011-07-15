@@ -1,18 +1,18 @@
 <?php
 
-namespace Sfw;
+namespace SBFW;
 
 class Router
 {
     /**
      * Singleton instance
      *
-     * @var Sfw_Router
+     * @var SBFW_Router
      */
     static protected $_instance;
 
     /**
-     * Array of Sfw_Route
+     * Array of SBFW_Route
      *
      * @var array
      */
@@ -45,7 +45,7 @@ class Router
     /**
      * Registers a route
      *
-     * @param Sfw_Route $route
+     * @param SBFW_Route $route
      */
     public function add(Route $route)
     {

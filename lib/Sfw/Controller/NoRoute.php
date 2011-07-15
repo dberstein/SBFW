@@ -1,8 +1,8 @@
 <?php
 
-namespace Sfw\Controller;
+namespace SBFW\Controller;
 
-class NoRoute extends \Sfw\Controller
+class NoRoute extends \SBFW\Controller
 {
     public function render()
     {

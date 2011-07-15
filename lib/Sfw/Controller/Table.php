@@ -1,8 +1,8 @@
 <?php
 
-namespace Sfw\Controller;
+namespace SBFW\Controller;
 
-class Table extends \Sfw\Controller
+class Table extends \SBFW\Controller
 {
     public function render()
     {
